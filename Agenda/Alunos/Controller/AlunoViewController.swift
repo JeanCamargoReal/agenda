@@ -56,6 +56,21 @@ class AlunoViewController: UIViewController, ImagePickerFotoSelecionada {
         self.scrollViewPrincipal.contentSize = CGSize(width: self.scrollViewPrincipal.frame.width, height: self.scrollViewPrincipal.frame.height + self.scrollViewPrincipal.frame.height/2)
     }
     
+    func mostarMultimidia(_ opcao: MenuOpcoes) {
+        // Para utilização da camera e/ou buscar fotos na biblioteca
+        
+        let multimidia = UIImagePickerController()
+        multimidia.delegate = imagePicker
+        
+        if opcao == .camera && UIImagePickerController.isSourceTypeAvailable(.camera) {
+            multimidia.sourceType = .camera
+        } else {
+            multimidia.sourceType = .photoLibrary
+        }
+        
+        self.present(multimidia, animated: true, completion: nil)
+    }
+
     // MARK: - Delegate
     
     func imagePickerFotoSelecionada(_ foto: UIImage) {
@@ -65,19 +80,14 @@ class AlunoViewController: UIViewController, ImagePickerFotoSelecionada {
     // MARK: - IBActions
     
     @IBAction func buttonFoto(_ sender: UIButton) {
-        // Para utilização da camera e/ou buscar fotos na biblioteca
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let multimidia = UIImagePickerController()
-            multimidia.sourceType = .camera
-            multimidia.delegate = imagePicker
-            self.present(multimidia, animated: true, completion: nil)
-        }
         
+        let menu = ImagePicker().menuDeOpcoes { (opcao) in
+            self.mostarMultimidia(opcao)
+        }
+        present(menu, animated: true, completion: nil)
     }
     
     @IBAction func stepperNota(_ sender: UIStepper) {
         self.textFieldNota.text = "\(sender.value)"
     }
-    
-    
 }
