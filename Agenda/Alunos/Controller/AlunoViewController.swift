@@ -50,7 +50,13 @@ class AlunoViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func buttonFoto(_ sender: UIButton) {
-        // TO DO
+        // Para utilização da camera e/ou buscar fotos na biblioteca
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let multimidia = UIImagePickerController()
+            multimidia.sourceType = .camera
+            self.present(multimidia, animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func stepperNota(_ sender: UIStepper) {
